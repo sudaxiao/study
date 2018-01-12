@@ -143,7 +143,6 @@ public class ConditionLock {
         threadPoolExecutor.execute(consumerOne);
         threadPoolExecutor.execute(consumerTwo);
         threadPoolExecutor.execute(product);
-
         threadPoolExecutor.shutdown();
     }
 }
