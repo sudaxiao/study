@@ -21,26 +21,26 @@ public class ShutdownNowTest {
         threadFactoryBuilder.setNameFormat("ShutdownNowTestPool");
         ThreadFactory threadFactory = threadFactoryBuilder.build();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, threadNum, 60L, TimeUnit.SECONDS, new LinkedBlockingDeque<>(5), threadFactory, new ThreadPoolExecutor.AbortPolicy());
+        Integer taskNum = 10;
 
-        for (int i = 0; i < 10; i++) {
-            String content = "Thread-name" + i;
+        for (int i = 0; i < taskNum; i++) {
+            String taskName = "Task-" + i;
             threadPoolExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    Thread.currentThread().setName(content);
-                    int x = 10000;
+                    int x = 100000;
                     //为了模拟长时间任务，避免任务队列中没有任务
                     while (x-- > 0) {
 
                     }
-                    System.out.println( Thread.currentThread().getName());
+                    System.out.println(taskName);
                 }
             });
         }
 
-        List<Runnable> runnables = threadPoolExecutor.shutdownNow();
+        List<Runnable> runnableList = threadPoolExecutor.shutdownNow();
         System.out.println("--------------------------------未执行的任务--------------------------------");
-        for (Runnable runnable : runnables) {
+        for (Runnable runnable : runnableList) {
             new Thread(runnable).start();
         }
     }
