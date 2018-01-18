@@ -23,7 +23,7 @@ public class SocketTestOne {
     }
 
     /**
-     * 处理客户端请求  处理套接字  访问数据库 等等
+     * 处理客户端请求  读取套接字  访问数据库 等等
      * @param socket
      */
     public static void handlerRequest(Socket socket) {

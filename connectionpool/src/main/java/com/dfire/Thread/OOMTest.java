@@ -22,7 +22,6 @@ public class OOMTest {
 
     public static void problem() {
         ExecutorService executorService = Executors.newCachedThreadPool();
-
         for(int i = 0; i < taskNum; i++) {
             executorService.execute(() ->{
                 try {

@@ -1,6 +1,5 @@
 package com.dfire;
 
-import org.hibernate.validator.constraints.br.TituloEleitoral;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,12 +10,11 @@ public class ThreadPoolTest {
 
 
 	private ThreadPoolExecutor threadPoolExecutor;
-	private Integer threadNum;
+	private Integer threadNum = 1;
 
 	@Before
 	public void before() {
-		threadPoolExecutor = new ThreadPoolExecutor(1, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1), new ThreadPoolExecutor.AbortPolicy());
-
+		threadPoolExecutor = new ThreadPoolExecutor(threadNum, threadNum, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1), new ThreadPoolExecutor.AbortPolicy());
 		System.out.println("---------------------初始化线程池----------------------");
 	}
 
@@ -96,8 +94,8 @@ public class ThreadPoolTest {
 	@Test
 	public void discardPolicyTest() {
 	//	threadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
-		threadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
-	//	threadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+	 //	threadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
+		threadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 		for (int i = 0; i < 4; i++) {
 			String taskName = "task-" + i;
 			threadPoolExecutor.execute(() -> {
@@ -110,7 +108,6 @@ public class ThreadPoolTest {
 				System.out.println(taskName + "执行了   执行线程名称：" + Thread.currentThread().getName());
 			});
 		}
-		System.out.println(threadPoolExecutor.getTaskCount());
 	}
 
 
